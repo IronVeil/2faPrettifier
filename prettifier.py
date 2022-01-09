@@ -1,7 +1,17 @@
 # 2 Factor Authentication Code Prettifier
 # Turns a mess of numbers and letters into XXXX XXXX XXXX XXXX
 
-# THIS IS A TEST COMMIT
+
+# Tries to import copy module
+try:
+    import pyperclip
+    copy = True
+
+except:
+    print("PYPERCLIP IS NOT INSTALLED, 2FA CODE IS NOT AUTOMATICALLY COPIED TO CLIPBOARD")
+    print("PLEASE INSTALL PYPERCLIP FOR THIS FEATURE THROUGH PIP\n")
+    copy = False
+
 
 # Prettifier subroutine
 def prettify(code):
@@ -19,5 +29,14 @@ code = input("Please enter 2FA seed: ")
 
 
 # Output
+code = prettify(code)
 print("\nThe new code is:")
-print(prettify(code))
+print(code)
+
+
+# Autocopy if possible
+if copy:
+    pyperclip.copy(code)
+    print("\nCode copied to clipboard\n")
+else:
+    print("\nCode not copied to clipboard\n")
