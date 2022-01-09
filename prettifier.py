@@ -2,6 +2,16 @@
 # Turns a mess of numbers and letters into XXXX XXXX XXXX XXXX
 
 
+# Tries to import copy module
+try:
+    import pyperclip
+    copy = True
+
+except:
+    print("PYPERCLIP IS NOT INSTALLED, INSTALLING IT THROUGH PIP IS ADVISED")
+    copy = False
+
+
 # Prettifier subroutine
 def prettify(code):
 
@@ -18,5 +28,14 @@ code = input("Please enter 2FA seed: ")
 
 
 # Output
+code = prettify(code)
 print("\nThe new code is:")
-print(prettify(code))
+print(code)
+
+
+# Autocopy if possible
+if copy:
+    pyperclip.copy(code)
+    print("\nCode copied to clipboard\n")
+else:
+    print("\nCode not copied to clipboard\n")
