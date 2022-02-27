@@ -3,6 +3,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 class MyWindow(Gtk.Window):
+    
     def __init__(self):
 
         super().__init__(title="2FA Prettifier")
@@ -13,6 +14,7 @@ class MyWindow(Gtk.Window):
         entry.set_icon_from_icon_name(Gtk.EntryIconPosition.PRIMARY, "input-dialpad-symbolic")
         submit = Gtk.Button(label="Prettify")
         output = Gtk.Label(label="XXXX XXXX XXXX XXXX")
+        submit.connect("clicked", self.on_button_clicked, entry, output)
 
         grid = Gtk.Grid()
         grid.set_column_spacing(10)
@@ -22,6 +24,12 @@ class MyWindow(Gtk.Window):
         grid.attach(output, 0, 2, 2, 1)
 
         self.add(grid)
+
+    def on_button_clicked(self, widget, entry, label):
+        code = entry.get_text()
+        code = code.replace(" ", "")
+        code = ' '.join([code[i:i+4] for i in range(0, len(code), 4)]).upper()
+        label.set_text(code)
 
 win = MyWindow()
 win.connect("destroy", Gtk.main_quit)
